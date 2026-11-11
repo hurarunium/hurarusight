@@ -3,14 +3,16 @@ import { tagFilterUrl } from '../utils/articles.ts';
 
 interface Props {
   tags: string[];
+  // タグを押したときに開く一覧ページ(既定は Articles)
+  listUrl?: string;
   class?: string;
 }
-const { tags, class: className } = Astro.props;
+const { tags, listUrl, class: className } = Astro.props;
 ---
 {tags.length > 0 && (
   <ul class:list={['tag-links', className]}>
     {tags.map((t) => (
-      <li><a class="tag-links__link" href={tagFilterUrl(t)}>#{t}</a></li>
+      <li><a class="tag-links__link" href={tagFilterUrl(t, listUrl)}>#{t}</a></li>
     ))}
   </ul>
 )}

@@ -15,16 +15,16 @@ export async function getListedArticles() {
   return articles.sort((a, b) => b.data.date.localeCompare(a.data.date));
 }
 
-// 記事に付いたタグを、付いている記事数の多い順(同数なら名前順)で返す
-export function collectTags(articles: CollectionEntry<'articles'>[]) {
+// 記事や実績に付いたタグを、付いている件数の多い順(同数なら名前順)で返す
+export function collectTags(entries: { data: { tags: string[] } }[]) {
   const counts = new Map<string, number>();
-  for (const tag of articles.flatMap((a) => a.data.tags)) {
+  for (const tag of entries.flatMap((e) => e.data.tags)) {
     counts.set(tag, (counts.get(tag) ?? 0) + 1);
   }
   return [...counts.keys()].sort((a, b) => counts.get(b)! - counts.get(a)! || a.localeCompare(b, 'ja'));
 }
 
-// そのタグで絞り込んだ Articles ページのURL
-export function tagFilterUrl(tag: string) {
-  return `/articles/?tag=${encodeURIComponent(tag)}`;
+// そのタグで絞り込んだ一覧ページのURL(既定は Articles。Works では '/works/' を渡す)
+export function tagFilterUrl(tag: string, listUrl = '/articles/') {
+  return `${listUrl}?tag=${encodeURIComponent(tag)}`;
 }
