@@ -90,7 +90,7 @@ main { width: 100%; max-width: var(--width); margin-inline: auto; }
 .tag-links { display: flex; flex-wrap: wrap; gap: 4px 12px; list-style: none; color: var(--txt-mute); font-size: 12px; }
 .tag-links__link:hover { color: var(--accent); }
 
-/* Articles: タグで絞り込むチップ */
+/* タグで絞り込むチップ(Articles・Works) */
 .tag-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
 .tag-filter__chip {
   padding: 2px 12px; font: inherit; font-size: 12px; color: var(--txt-mute); cursor: pointer;
@@ -101,6 +101,20 @@ main { width: 100%; max-width: var(--width); margin-inline: auto; }
 .tag-filter__chip[hidden] { display: none; }
 .tag-filter__more { padding: 2px 8px; font: inherit; font-size: 12px; color: var(--txt-mute); cursor: pointer; background: none; border: none; }
 .tag-filter__more:hover { color: var(--accent); }
+
+/* Works: 実績の一覧と詳細 */
+.work-list { list-style: none; }
+.work-list__item { border-bottom: 1px solid var(--line); padding-block: 18px; }
+.work-list__item[hidden] { display: none; }
+.work-list__title { font-weight: 700; }
+.work-list__title:hover { color: var(--accent); }
+.work-list__meta { color: var(--txt-mute); font-size: 13px; }
+.work-links { display: flex; flex-wrap: wrap; gap: 4px 16px; list-style: none; font-size: 13px; color: var(--accent); }
+.work-links a:hover { text-decoration: underline; }
+.work-list__links { margin-top: 4px; }
+.work__desc { margin-top: 8px; }
+.work__tech { color: var(--txt-mute); font-size: 13px; }
+.work__links { margin-top: 8px; }
 
 /* 記事本文 */
 .back-link { display: inline-block; color: var(--txt-mute); font-size: 13px; margin-bottom: 24px; }

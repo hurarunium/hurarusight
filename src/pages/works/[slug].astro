@@ -1,0 +1,43 @@
+---
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { siteName } from '../../data/content.ts';
+import { formatWorkTime, getPublishedWorks } from '../../utils/works.ts';
+import TagLinks from '../../components/TagLinks.astro';
+import WorkLinks from '../../components/WorkLinks.astro';
+
+export async function getStaticPaths() {
+  const works = await getPublishedWorks();
+  return works.map((work) => ({
+    params: { slug: work.id },
+    props: { work },
+  }));
+}
+
+const { work } = Astro.props;
+const { Content } = await render(work);
+---
+<Layout
+  title={`${work.data.title} | ${siteName}`}
+  description={work.data.description}
+  ogType="article"
+  noindex={work.data.status === 'unlisted'}
+>
+  <main class="container page">
+    <a class="back-link" href="/works/">← Works一覧に戻る</a>
+    <article class="article">
+      <h1 class="article__title">{work.data.title}</h1>
+      <p class="work__desc">{work.data.description}</p>
+      <p class="article__date">{formatWorkTime(work)}</p>
+      {work.data.tech.length > 0 && <p class="work__tech">{work.data.tech.join(' / ')}</p>}
+      <TagLinks tags={work.data.tags} listUrl="/works/" class="article__tags" />
+      <WorkLinks links={work.data.links} class="work__links" />
+      {/* 本文が空の実績は、上の情報だけを出す */}
+      {(work.body ?? '').trim() !== '' && (
+        <div class="article__body">
+          <Content />
+        </div>
+      )}
+    </article>
+  </main>
+</Layout>

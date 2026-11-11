@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { siteName } from '../../data/content.ts';
+import { collectTags } from '../../utils/articles.ts';
+import { getListedWorks } from '../../utils/works.ts';
+import WorkList from '../../components/WorkList.astro';
+import TagFilter from '../../components/TagFilter.astro';
+
+const works = await getListedWorks();
+const tags = collectTags(works);
+---
+<Layout title={`Works | ${siteName}`} description="hurarunium(ふらるにうむ / a.k.a huraru)が作ったもの・やってきたことの一覧。">
+  <main class="container page page--works">
+    <h1 class="page__title">Works</h1>
+    <TagFilter tags={tags} />
+    <WorkList works={works} />
+    <p id="works-empty" class="empty" hidden>該当する実績がありません。</p>
+  </main>
+</Layout>
+
+<script>
+  import { setupTagFilter } from '../../scripts/tagFilter.ts';
+
+  // 選択中のタグを持つ実績だけを表示する
+  setupTagFilter({
+    items: [...document.querySelectorAll<HTMLElement>('.work-list__item')],
+    tagLinks: [...document.querySelectorAll<HTMLAnchorElement>('.work-list__tags a')],
+    emptyMessage: document.getElementById('works-empty') as HTMLElement,
+  });
+</script>
