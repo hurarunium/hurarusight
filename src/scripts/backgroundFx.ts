@@ -1,25 +1,10 @@
 // 背景の演出(浮かんで光る点と、流れて出てくる言葉)。
 // ポートフォリオ(huraru-portfolio)の dotMotion.js・textMotion.js を元にしている。
 // 記事の本文ページ(<html data-page="article">)では、読みやすさのために控えめ(subtle)にする
+// 流れる言葉の一覧は src/data/content.ts の backgroundMessages
+import { backgroundMessages as messages } from '../data/content.ts';
 
 type FxLevel = 'full' | 'subtle';
-
-const messages = [
-  'Never-Ending Creating',
-  'Hello! 2026!',
-  'Hello World!!',
-  "The longing won't stop",
-  'Creating the world',
-  'huraru.com',
-  'In search of the future...',
-  'Embrace the unknown',
-  'Code is poetry',
-  'Dream, Code, Repeat',
-  'Crafting digital dreams',
-  'Designing the future',
-  'Exploring endless',
-  'Antigravity',
-];
 
 const dotColors = ['#407ec5', '#6d64f4', '#e495fa', '#009ed3'];
 
