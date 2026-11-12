@@ -1,7 +1,9 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import SideNav from '../components/SideNav.astro';
 import { siteName } from '../data/content.ts';
+import { getLogoText } from '../utils/logo.ts';
 
 interface Props {
   title: string;
@@ -13,6 +15,7 @@ const defaultDescription = 'hurarunium(ふらるにうむ / a.k.a huraru)の個�
 const { title, description = defaultDescription, ogType = 'website', noindex = false } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const gaId = import.meta.env.PUBLIC_GA_ID;
+const logoText = getLogoText(Astro.url.pathname);
 ---
 <html lang="ja">
   <head>
@@ -49,10 +52,17 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <SideNav />
     <Header />
-    <slot />
-    <footer class="site-footer">
-      <div class="container">© 2026 hurarunium / (huraru)</div>
-    </footer>
+    <div class="page-wrap">
+      <!-- ロゴ: 本文の上に小さく置く(768px 以下では上のバーに置くので隠す) -->
+      <div class="container logo-row">
+        <a class="logo-inline" href="/">{logoText}</a>
+      </div>
+      <slot />
+      <footer class="site-footer">
+        <div class="container">© 2026 hurarunium / (huraru)</div>
+      </footer>
+    </div>
   </body>
 </html>
