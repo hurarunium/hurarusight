@@ -112,7 +112,46 @@ main { width: 100%; max-width: var(--width); margin-inline: auto; }
   .side-nav__label { opacity: 1; }
 }
 
-
+/* 背景の演出(ポートフォリオの方眼・図形・浮かぶ点・流れる言葉を元にしている) */
+.fx { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.fx__grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 196, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 196, 255, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.fx__shape { position: absolute; border: 2px solid var(--accent); opacity: 0.15; }
+.fx__shape--diamond { top: 10%; right: 10%; width: 100px; height: 100px; transform: rotate(45deg); }
+.fx__shape--circle { bottom: 15%; left: 8%; width: 150px; height: 150px; border-radius: 50%; }
+.fx__shape--triangle { top: 50%; right: 5%; width: 80px; height: 80px; border: 0; background: var(--accent); opacity: 0.06; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
+.fx__dot {
+  position: absolute; width: var(--size); height: var(--size); border-radius: 50%;
+  background: var(--color); box-shadow: 0 0 10px var(--color); opacity: 0;
+  animation: fx-float var(--duration) ease-in-out var(--delay) infinite;
+}
+@keyframes fx-float {
+  0% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: 0.8; }
+  25% { transform: translate(var(--dx1), var(--dy1)); }
+  50% { transform: translate(var(--dx2), var(--dy2)); opacity: 0.6; }
+  75% { transform: translate(var(--dx1), var(--dy2)); }
+  90% { opacity: 0.3; }
+  100% { transform: translate(0, 0); opacity: 0; }
+}
+.fx__text {
+  position: absolute; white-space: nowrap;
+  font-size: clamp(1rem, 0.636rem + 1.82vw, 2rem); letter-spacing: clamp(1px, 0.3vw, 4px);
+  color: var(--accent); opacity: 0.2; transition: opacity 1.5s ease;
+}
+.fx__text.is-fading { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .fx__dot { animation: none; opacity: 0.5; }
+}
+/* 記事の本文ページは、読みやすさのために演出を控えめにする(図形を消し、方眼と点を薄く。言葉は出さない) */
+html[data-page="article"] .fx__shape { display: none; }
+html[data-page="article"] .fx__grid { opacity: 0.5; }
+html[data-page="article"] .fx__dot { box-shadow: none; }
 
 /* トップ */
 .intro { padding-block: 56px 40px; }

@@ -2,8 +2,9 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import SideNav from '../components/SideNav.astro';
+import BackgroundFx from '../components/BackgroundFx.astro';
 import { siteName } from '../data/content.ts';
-import { getLogoText } from '../utils/logo.ts';
+import { getLogoText, isArticlePage } from '../utils/logo.ts';
 
 interface Props {
   title: string;
@@ -16,8 +17,10 @@ const { title, description = defaultDescription, ogType = 'website', noindex = f
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const gaId = import.meta.env.PUBLIC_GA_ID;
 const logoText = getLogoText(Astro.url.pathname);
+// 記事の本文ページでは、読みやすさのために背景の演出を控えめにする(CSS と backgroundFx.ts が見る)
+const pageKind = isArticlePage(Astro.url.pathname) ? 'article' : 'other';
 ---
-<html lang="ja">
+<html lang="ja" data-page={pageKind}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,6 +55,7 @@ const logoText = getLogoText(Astro.url.pathname);
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <BackgroundFx />
     <SideNav />
     <Header />
     <div class="page-wrap">
