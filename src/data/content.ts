@@ -22,7 +22,7 @@ export const profile: Profile = {
 
 export const links: Link[] = [
   { label: "X", url: "https://x.com/hurarunium_sabu" },
-  { label: "GitHub", url: "https://github.com/huraru7" },
+  { label: "GitHub", url: "https://github.com/hurarunium" },
   { label: "Portfolio", url: "https://portfolio.huraru.com" },
   { label: "note", url: "https://note.com/huraru" },
 ];
