@@ -5,10 +5,16 @@ import { siteName } from '../data/content.ts';
 export function getLogoText(pathname: string): string {
   if (pathname.startsWith('/articles')) return 'huraru(home.articles)';
   if (pathname.startsWith('/works')) return 'huraru(home.works)';
+  if (pathname.startsWith('/about')) return 'huraru(home.about)';
   return siteName;
 }
 
-// 記事の本文ページか(一覧 /articles/ は含めない)。背景の演出の強さを切り替える対象
+// 記事の本文ページか(一覧 /articles/ は含めない)。本文の幅を狭める対象
 export function isArticlePage(pathname: string): boolean {
   return /^\/articles\/[^/]+\/?$/.test(pathname);
+}
+
+// 文章を読むページか(記事の本文と About)。背景の演出を控えめにする対象
+export function isReadingPage(pathname: string): boolean {
+  return isArticlePage(pathname) || /^\/about\/?$/.test(pathname);
 }

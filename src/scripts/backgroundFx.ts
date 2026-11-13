@@ -1,6 +1,6 @@
 // 背景の演出(浮かんで光る点と、流れて出てくる言葉)。
 // ポートフォリオ(huraru-portfolio)の dotMotion.js・textMotion.js を元にしている。
-// 記事の本文ページ(<html data-page="article">)では、読みやすさのために控えめ(subtle)にする
+// 文章を読むページ(<html data-fx="subtle">。記事の本文と About)では、読みやすさのために控えめにする
 // 流れる言葉の一覧は src/data/content.ts の backgroundMessages
 import { backgroundMessages as messages } from '../data/content.ts';
 
@@ -24,7 +24,7 @@ const typing = {
 };
 
 function currentFxLevel(): FxLevel {
-  return document.documentElement.dataset.page === 'article' ? 'subtle' : 'full';
+  return document.documentElement.dataset.fx === 'subtle' ? 'subtle' : 'full';
 }
 
 function random(min: number, max: number): number {

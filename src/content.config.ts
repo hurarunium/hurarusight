@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { articlesDir, worksDir } from './utils/articlesDir.js';
+import { articlesDir, articlesRoot, worksDir } from './utils/articlesDir.js';
 
 // 記事（1記事 = 1ファイル。書いたら完結する単発記事）
 const articles = defineCollection({
@@ -44,4 +44,21 @@ const works = defineCollection({
   }),
 });
 
-export const collections = { articles, works };
+// 自己紹介(About。記事リポ直下の about.md の1つだけ。無ければ /about/ とメニューを出さない)
+const about = defineCollection({
+  loader: glob({ pattern: 'about.md', base: articlesRoot }),
+  schema: z.object({
+    // 肩書き(省略可)
+    role: z.string().nullish(),
+    // 写真(省略可)。記事リポの images/about/ に置き、/article-images/about/<画像> で書く
+    photo: z.string().nullish(),
+    // 使える言語・ツール。note は短い説明(省略可)
+    skills: z
+      .array(z.object({ name: z.string(), icon: z.string(), note: z.string().nullish() }))
+      .default([]),
+    // draft: 開発中(dev)だけ表示し、本番ビルドには出さない / published: 公開
+    status: z.enum(['draft', 'published']).default('draft'),
+  }),
+});
+
+export const collections = { articles, works, about };
