@@ -20,6 +20,7 @@ const tags = collectTags(works);
 
 <script>
   import { setupTagFilter } from '../../scripts/tagFilter.ts';
+  import { setupMasonry } from '../../scripts/masonry.ts';
 
   // 選択中のタグを持つ実績だけを表示する
   setupTagFilter({
@@ -27,4 +28,8 @@ const tags = collectTags(works);
     tagLinks: [...document.querySelectorAll<HTMLAnchorElement>('.work-list__tags a')],
     emptyMessage: document.getElementById('works-empty') as HTMLElement,
   });
+
+  // カードを上へ詰めて並べる
+  const workList = document.querySelector<HTMLElement>('.work-list');
+  if (workList) setupMasonry(workList);
 </script>

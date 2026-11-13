@@ -229,6 +229,8 @@ html[data-fx="subtle"] .fx__dot { box-shadow: none; }
 /* Works: 実績の一覧と詳細 */
 /* 2列のカード(768px 以下は1列)。画像がある実績はカードの上に画像を出す */
 .work-list { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+/* masonry.ts が動いたら、行を細かくしてカードを上へ詰める(行の間隔は、カードの高さに含めて masonry.ts が計算する) */
+.work-list.is-masonry { grid-auto-rows: 4px; row-gap: 0; }
 .work-list__item { overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: #1e1e1e; }
 .work-list__item:hover { border-color: rgba(148, 196, 255, 0.45); }
 .work-list__item[hidden] { display: none; }
