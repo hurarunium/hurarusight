@@ -8,17 +8,23 @@
   --txt-mute: #8a8a8a;
   --accent: #94c4ff;
   --font: "JetBrains Mono", "Noto Sans JP", ui-monospace, monospace;
-  --width: 720px;
+  /* 本文の幅。一覧などは広め、記事の本文は読みやすさのため狭め(18px で1行40字前後) */
+  --width-wide: 960px;
+  --width-narrow: 760px;
+  --width: var(--width-wide);
   --side-nav-width: 72px;
   --bar-height: 48px;
   color-scheme: dark;
 }
 
+/* 記事の本文ページだけ幅を狭める(data-page は Layout.astro で付ける) */
+html[data-page="article"] { --width: var(--width-narrow); }
+
 body {
   background: var(--bg);
   color: var(--txt);
   font-family: var(--font);
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.8;
   padding-left: var(--side-nav-width);
   overflow-x: hidden;
@@ -89,6 +95,8 @@ main { width: 100%; max-width: var(--width); margin-inline: auto; }
 .nav-toggle, .nav-overlay { display: none; }
 @media (max-width: 768px) {
   :root { --side-nav-width: 0px; }
+  /* スマホでは文字を少し小さくする(広い画面は 18px) */
+  body { font-size: 16px; }
   /* 狭い幅では、上のバーにハンバーガーとロゴを置き、本文の上のロゴは隠す */
   .top-bar { display: flex; }
   .page-wrap { padding-top: var(--bar-height); }
@@ -155,7 +163,7 @@ html[data-page="article"] .fx__dot { box-shadow: none; }
 
 /* トップ */
 .intro { padding-block: 56px 40px; }
-.intro__name { font-size: 28px; line-height: 1.3; }
+.intro__name { font-size: 32px; line-height: 1.3; }
 .intro__aka { color: var(--txt-mute); font-size: 13px; }
 .intro__tagline { color: var(--txt-mute); font-size: 13px; letter-spacing: 0.15em; margin-top: 4px; }
 .intro__text { margin-top: 20px; }
@@ -184,7 +192,7 @@ html[data-page="article"] .fx__dot { box-shadow: none; }
 
 /* 一覧・記事ページ */
 .page { padding-block: 40px 80px; }
-.page__title { font-size: 22px; margin-bottom: 24px; }
+.page__title { font-size: 26px; margin-bottom: 24px; }
 
 /* Articles: タイトルの右に検索ボックス(狭い画面では下に回り込む) */
 .articles-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-bottom: 24px; }
@@ -235,13 +243,13 @@ html[data-page="article"] .fx__dot { box-shadow: none; }
 /* 記事本文 */
 .back-link { display: inline-block; color: var(--txt-mute); font-size: 13px; margin-bottom: 24px; }
 .back-link:hover { color: var(--accent); }
-.article__title { font-size: 24px; line-height: 1.4; }
+.article__title { font-size: 28px; line-height: 1.4; }
 .article__date { color: var(--txt-mute); font-size: 13px; margin-top: 8px; }
 .article__tags { margin-top: 4px; }
 .article__body { margin-top: 32px; }
 .article__body > * + * { margin-top: 1.2em; }
-.article__body h2 { font-size: 19px; margin-top: 2em; }
-.article__body h3 { font-size: 16px; margin-top: 1.6em; }
+.article__body h2 { font-size: 22px; margin-top: 2em; }
+.article__body h3 { font-size: 19px; margin-top: 1.6em; }
 .article__body a { color: var(--accent); text-decoration: underline; }
 .article__body ul { padding-left: 1.4em; }
 .article__body ol { padding-left: 2em; }
