@@ -32,6 +32,7 @@ const { Content } = await render(work);
       {work.data.tech.length > 0 && <p class="work__tech">{work.data.tech.join(' / ')}</p>}
       <TagLinks tags={work.data.tags} listUrl="/works/" class="article__tags" />
       <WorkLinks links={work.data.links} class="work__links" />
+      {work.data.image && <img class="work__image" src={work.data.image} alt={work.data.title} decoding="async" />}
       {/* 本文が空の実績は、上の情報だけを出す */}
       {(work.body ?? '').trim() !== '' && (
         <div class="article__body">

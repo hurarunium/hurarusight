@@ -37,6 +37,8 @@ const works = defineCollection({
     tags: z.array(z.string()).default([]),
     // GitHub・公開先・関連記事など。あるものだけ書く
     links: z.array(z.object({ label: z.string(), url: z.string() })).default([]),
+    // 一覧のカードと詳細ページの上に出す画像(省略可)。記事リポの images/works/<名前>/ に置き、/article-images/works/<名前>/<画像> で書く
+    image: z.string().nullish(),
     // 記事と同じ意味(draft: 本番に出さない / unlisted: 一覧とサイトマップに出さない / published: 公開)
     status: z.enum(['draft', 'unlisted', 'published']).default('draft'),
   }),
