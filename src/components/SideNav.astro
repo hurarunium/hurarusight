@@ -3,10 +3,13 @@
 // 普段はアイコンだけの細い帯で、ホバー・フォーカスで広がって名前が出る。768px 以下ではハンバーガーで開く
 import { links } from '../data/content.ts';
 import { getAbout } from '../utils/about.ts';
+import { getListedWorks } from '../utils/works.ts';
 
 const path = Astro.url.pathname;
 // About は about.md があるときだけ出す(本番では draft のときも出さない)
 const hasAbout = (await getAbout()) !== undefined;
+// Works は一覧に出る実績が1件以上あるときだけ出す(本番では draft・unlisted だけなら出さない)
+const hasWorks = (await getListedWorks()).length > 0;
 
 // アイコンは線だけの SVG(色は文字色に合わせる)
 const icons = {
@@ -21,7 +24,7 @@ const icons = {
 const menu = [
   { href: '/', label: 'Home', icon: icons.home, current: path === '/' },
   { href: '/articles/', label: 'Articles', icon: icons.articles, current: path.startsWith('/articles') },
-  { href: '/works/', label: 'Works', icon: icons.works, current: path.startsWith('/works') },
+  ...(hasWorks ? [{ href: '/works/', label: 'Works', icon: icons.works, current: path.startsWith('/works') }] : []),
   ...(hasAbout ? [{ href: '/about/', label: 'About', icon: icons.about, current: path.startsWith('/about') }] : []),
 ];
 
