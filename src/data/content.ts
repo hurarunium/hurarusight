@@ -24,6 +24,7 @@ export const links: Link[] = [
   { label: "X", url: "https://x.com/hurarunium_sabu" },
   { label: "GitHub", url: "https://github.com/hurarunium" },
   { label: "Portfolio", url: "https://portfolio.huraru.com" },
+  { label: "Lab", url: "https://lab.huraru.com" },
   { label: "note", url: "https://note.com/huraru" },
 ];
 
