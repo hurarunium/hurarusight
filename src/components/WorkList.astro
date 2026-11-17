@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatWorkTime } from '../utils/works.ts';
+import TagLinks from './TagLinks.astro';
+import WorkLinks from './WorkLinks.astro';
+
+interface Props {
+  works: CollectionEntry<'works'>[];
+}
+const { works } = Astro.props;
+// 2列のカードで並べる(768px 以下は1列)。画像がある実績はカードの上に画像、無い実績は文字だけ
+---
+{works.length === 0 ? (
+  <p class="empty">まだ実績がありません。</p>
+) : (
+  <ul class="work-list">
+    {works.map((w) => (
+      <li class="work-list__item" data-tags={JSON.stringify(w.data.tags)}>
+        {/* 画像は任意。名前と同じ詳細ページへのリンクなので、読み上げとタブ移動からは外し、名前のリンクに任せる */}
+        {w.data.image && (
+          <a class="work-list__media" href={`/works/${w.id}/`} tabindex="-1" aria-hidden="true">
+            <img src={w.data.image} alt="" loading="lazy" decoding="async" />
+          </a>
+        )}
+        <div class="work-list__body">
+          <!-- 1件の中にタグとリンクという別のリンクがあるので、名前だけを詳細ページへのリンクにする(<a>は入れ子にできない) -->
+          <a class="work-list__title" href={`/works/${w.id}/`}>{w.data.title}</a>
+          <p class="work-list__desc">{w.data.description}</p>
+          <p class="work-list__meta">
+            {formatWorkTime(w)}{w.data.tech.length > 0 && ` · ${w.data.tech.join(' / ')}`}
+          </p>
+          <TagLinks tags={w.data.tags} listUrl="/works/" class="work-list__tags" />
+          <WorkLinks links={w.data.links} class="work-list__links" />
+        </div>
+      </li>
+    ))}
+  </ul>
+)}

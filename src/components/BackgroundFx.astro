@@ -1,0 +1,16 @@
+---
+// 背景の演出(方眼・図形・浮かぶ点・流れる言葉)。読み上げ・操作の対象にはしない
+---
+<div class="fx" aria-hidden="true">
+  <div class="fx__grid"></div>
+  <div class="fx__shape fx__shape--diamond"></div>
+  <div class="fx__shape fx__shape--circle"></div>
+  <div class="fx__shape fx__shape--triangle"></div>
+  <div class="fx__dots" id="fxDots"></div>
+  <div class="fx__texts" id="fxTexts"></div>
+</div>
+
+<script>
+  import { startBackgroundFx } from '../scripts/backgroundFx.ts';
+  startBackgroundFx();
+</script>

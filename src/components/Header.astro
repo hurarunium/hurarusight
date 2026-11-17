@@ -1,15 +1,20 @@
 ---
-import { siteName } from '../data/content.ts';
+// 上の細いバー。768px 以下でだけ出し、ハンバーガーとロゴを置く(広い画面ではロゴは本文の上)
+import { getLogoText } from '../utils/logo.ts';
 
-const isArticles = Astro.url.pathname.startsWith('/articles');
-// Articles 配下ではロゴを現在地つきの表記にする(サイト名の title などは変えない)
-const logoText = isArticles ? 'huraru(home.articles)' : siteName;
+const logoText = getLogoText(Astro.url.pathname);
 ---
-<header class="site-header">
-  <div class="container">
-    <a class="site-header__logo" href="/">{logoText}</a>
-    <nav class="site-header__nav" aria-label="メインナビゲーション">
-      <a class={isArticles ? 'is-current' : ''} href="/articles/">Articles</a>
-    </nav>
-  </div>
+<header class="top-bar">
+  <button type="button" class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="sideNav">
+    <span class="nav-toggle__bar"></span>
+    <span class="nav-toggle__bar"></span>
+    <span class="nav-toggle__bar"></span>
+  </button>
+  <a class="top-bar__logo" href="/">{logoText}</a>
 </header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<script>
+  import { setupNavToggle } from '../scripts/navToggle.ts';
+  setupNavToggle();
+</script>

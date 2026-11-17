@@ -4,3 +4,6 @@ export const articlesRoot = process.env.ARTICLES_DIR ?? '../hurarusight-articles
 
 // 記事(Markdown)を置くフォルダ
 export const articlesDir = `${articlesRoot}/articles`;
+
+// 実績(Works。1件1ファイルのMarkdown)を置くフォルダ
+export const worksDir = `${articlesRoot}/works`;

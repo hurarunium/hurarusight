@@ -1,0 +1,21 @@
+---
+// 実績のリンク(GitHub・公開先・関連記事など)。書かれたものだけ並べる
+import { isExternal } from '../utils/works.ts';
+
+interface Props {
+  links: { label: string; url: string }[];
+  class?: string;
+}
+const { links, class: className } = Astro.props;
+---
+{links.length > 0 && (
+  <ul class:list={['work-links', className]}>
+    {links.map((l) => (
+      <li>
+        {isExternal(l.url)
+          ? <a href={l.url} target="_blank" rel="noopener noreferrer">{l.label}</a>
+          : <a href={l.url}>{l.label}</a>}
+      </li>
+    ))}
+  </ul>
+)}

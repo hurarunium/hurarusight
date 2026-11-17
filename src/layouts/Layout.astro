@@ -1,7 +1,10 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import SideNav from '../components/SideNav.astro';
+import BackgroundFx from '../components/BackgroundFx.astro';
 import { siteName } from '../data/content.ts';
+import { getLogoText, isArticlePage, isReadingPage } from '../utils/logo.ts';
 
 interface Props {
   title: string;
@@ -13,8 +16,13 @@ const defaultDescription = 'hurarunium(ふらるにうむ / a.k.a huraru)の個�
 const { title, description = defaultDescription, ogType = 'website', noindex = false } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const gaId = import.meta.env.PUBLIC_GA_ID;
+const logoText = getLogoText(Astro.url.pathname);
+// 記事の本文ページだけ、本文の幅を狭める(CSS が見る)
+const pageKind = isArticlePage(Astro.url.pathname) ? 'article' : 'other';
+// 文章を読むページ(記事の本文と About)では、背景の演出を控えめにする(CSS と backgroundFx.ts が見る)
+const fxLevel = isReadingPage(Astro.url.pathname) ? 'subtle' : 'full';
 ---
-<html lang="ja">
+<html lang="ja" data-page={pageKind} data-fx={fxLevel}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -49,10 +57,18 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <BackgroundFx />
+    <SideNav />
     <Header />
-    <slot />
-    <footer class="site-footer">
-      <div class="container">© 2026 hurarunium / (huraru)</div>
-    </footer>
+    <div class="page-wrap">
+      <!-- ロゴ: 本文の上に小さく置く(768px 以下では上のバーに置くので隠す) -->
+      <div class="container logo-row">
+        <a class="logo-inline" href="/">{logoText}</a>
+      </div>
+      <slot />
+      <footer class="site-footer">
+        <div class="container">© 2026 hurarunium / (huraru)</div>
+      </footer>
+    </div>
   </body>
 </html>

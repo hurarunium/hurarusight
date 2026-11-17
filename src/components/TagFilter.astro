@@ -1,0 +1,22 @@
+---
+// タグで絞り込むチップの並び(すべて・上位のタグ・残りを開く「+N」)。動きは src/scripts/tagFilter.ts が担う
+interface Props {
+  // 件数の多い順に並べたタグ
+  tags: string[];
+}
+const { tags } = Astro.props;
+// 折りたたまずに見せるタグの数(件数の多い順に、この数まで)
+const visibleTagCount = 8;
+const hiddenTagCount = Math.max(tags.length - visibleTagCount, 0);
+---
+{tags.length > 0 && (
+  <div class="tag-filter" role="group" aria-label="タグで絞り込む">
+    <button class="tag-filter__chip" type="button" data-tag="" aria-pressed="true">すべて</button>
+    {tags.map((t, i) => (
+      <button class="tag-filter__chip" type="button" data-tag={t} data-extra={i >= visibleTagCount ? '' : undefined} hidden={i >= visibleTagCount} aria-pressed="false">#{t}</button>
+    ))}
+    {hiddenTagCount > 0 && (
+      <button class="tag-filter__more" type="button" aria-expanded="false">+{hiddenTagCount}</button>
+    )}
+  </div>
+)}
